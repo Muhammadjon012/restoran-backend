@@ -1,9 +1,15 @@
+
+
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
    try {
-      const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/restaurant-app', {
-         serverSelectionTimeoutMS: 5000,
+      if (!process.env.MONGO_URI) {
+         throw new Error('MONGO_URI is not defined');
+      }
+
+      const conn = await mongoose.connect(process.env.MONGO_URI, {
+         serverSelectionTimeoutMS: 10000,
       });
 
       console.log(`MongoDB connected: ${conn.connection.host}`);
@@ -14,3 +20,4 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
