@@ -35,7 +35,7 @@ connectDB().then(() => ensureDefaultAdmin());
 
 app.use(
    cors({
-      origin: true,
+      origin: ['https://restoran-frontendd.onrender.com', 'http://localhost:3000'],
       credentials: true,
    })
 );
