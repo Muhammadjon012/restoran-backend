@@ -34,11 +34,10 @@ const ensureDefaultAdmin = async () => {
 connectDB().then(() => ensureDefaultAdmin());
 
 const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-const allowedOrigins = [frontendUrl, 'http://localhost:3000'];
 
 app.use(
    cors({
-      origin: allowedOrigins,
+      origin: frontendUrl,
       credentials: true,
    })
 );
