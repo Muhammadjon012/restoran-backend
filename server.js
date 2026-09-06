@@ -33,25 +33,10 @@ const ensureDefaultAdmin = async () => {
 
 connectDB().then(() => ensureDefaultAdmin());
 
-const frontendUrl = process.env.FRONTEND_URL || 'https://restoran-frontendd.onrender.com';
-const allowedOrigins = frontendUrl.split(',').map(url => url.trim());
-
-console.log('Allowed CORS origins:', allowedOrigins);
-
+// Temporarily allow all origins for debugging
 app.use(
    cors({
-      origin: function (origin, callback) {
-         // Allow requests with no origin (like mobile apps or curl requests)
-         if (!origin) return callback(null, true);
-         
-         if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-         } else {
-            console.log('CORS blocked for origin:', origin);
-            console.log('Allowed origins are:', allowedOrigins);
-            callback(new Error('Not allowed by CORS'));
-         }
-      },
+      origin: '*',
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization']
