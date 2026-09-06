@@ -19,29 +19,33 @@ const ensureDefaultAdmin = async () => {
    const password = process.env.ADMIN_PASSWORD || 'admin123';
 
    const existingAdmin = await User.findOne({ email });
+
    if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash(password, 10);
+
       await User.create({
          name: 'Restaurant Admin',
          email,
          password: hashedPassword,
          role: 'admin',
       });
+
       console.log(`Default admin created: ${email}`);
    }
 };
 
 connectDB().then(() => ensureDefaultAdmin());
 
-// Temporarily allow all origins for debugging
+// ✅ CORS
 app.use(
    cors({
-      origin: '*',
+      origin: 'https://restoran-frontendd.onrender.com',
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization']
    })
 );
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -54,6 +58,6 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/contact', contactRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
    console.log(`Server running on port ${PORT}`);
 });
