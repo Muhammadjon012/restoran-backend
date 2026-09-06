@@ -33,7 +33,7 @@ const ensureDefaultAdmin = async () => {
 
 connectDB().then(() => ensureDefaultAdmin());
 
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+const frontendUrl = process.env.FRONTEND_URL || 'https://restoran-frontendd.onrender.com';
 
 app.use(
    cors({
